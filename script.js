@@ -1,15 +1,9 @@
-/* ============================================
-   REMY/PEPPER STEAK'S PORTFOLIO - Main JavaScript
-   ============================================ */
 
-// Wait for DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function () {
 
     'use strict';
 
-    /* ------------------------------------------
-       1. NAVBAR SCROLL EFFECT
-    ------------------------------------------ */
+  
     const navbar = document.querySelector('.navbar');
     let lastScroll = 0;
 
@@ -27,9 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     window.addEventListener('scroll', handleNavbarScroll, { passive: true });
 
-    /* ------------------------------------------
-       2. HAMBURGER MENU TOGGLE
-    ------------------------------------------ */
+   
     const hamburger = document.querySelector('.hamburger');
     const navLinks = document.querySelector('.nav-links');
     const navLinkItems = document.querySelectorAll('.nav-links a');
@@ -50,22 +42,19 @@ document.addEventListener('DOMContentLoaded', function () {
         hamburger.addEventListener('click', toggleMenu);
     }
 
-    // Close menu when a link is clicked
+  
     navLinkItems.forEach(function (link) {
         link.addEventListener('click', closeMenu);
     });
 
-    // Close menu on Escape key
+    
     document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape' && navLinks.classList.contains('active')) {
             closeMenu();
         }
     });
 
-    /* ------------------------------------------
-       3. ARTWORK DATA & DYNAMIC GALLERY RENDERER
-    ------------------------------------------ */
-    // Central album data array — each album is one category with multiple images
+  
     const albums = [
         {
             title: 'Digital Art',
@@ -136,7 +125,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     ];
 
-    // Generate gallery cards from the albums data
+   
     function renderGallery() {
         var grid = document.getElementById('galleryGrid');
         if (!grid) return;
@@ -169,9 +158,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     renderGallery();
 
-    /* ------------------------------------------
-       4. GALLERY FILTERING
-    ------------------------------------------ */
+    
     var filterButtons = document.querySelectorAll('.filter-btn');
 
     function applyGalleryFilter(filterValue) {
@@ -180,14 +167,14 @@ document.addEventListener('DOMContentLoaded', function () {
             if (filterValue === 'all') {
                 card.style.display = 'block';
                 card.style.animation = 'none';
-                card.offsetHeight; // Trigger reflow
+                card.offsetHeight; 
                 card.style.animation = 'fadeInUp 0.5s ease-out forwards';
             } else {
                 var category = card.getAttribute('data-category');
                 if (category === filterValue) {
                     card.style.display = 'block';
                     card.style.animation = 'none';
-                    card.offsetHeight; // Trigger reflow
+                    card.offsetHeight; 
                     card.style.animation = 'fadeInUp 0.5s ease-out forwards';
                 } else {
                     card.style.display = 'none';
@@ -207,9 +194,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    /* ------------------------------------------
-       5. LIGHTBOX MODAL (Album Viewer)
-    ------------------------------------------ */
+    
     var lightbox = document.getElementById('lightbox');
     var lightboxClose = document.querySelector('.lightbox-close');
     var lightboxTitle = document.getElementById('lightbox-title');
@@ -252,12 +237,12 @@ document.addEventListener('DOMContentLoaded', function () {
             lightboxImage.alt = img.title;
         }
 
-        // Update counter
+        
         if (lightboxCounter) {
             lightboxCounter.textContent = (currentImageIndex + 1) + ' / ' + album.images.length;
         }
 
-        // Show/hide navigation arrows based on image count
+        
         var hasMultiple = album.images.length > 1;
         if (lightboxPrev) lightboxPrev.style.display = hasMultiple ? 'flex' : 'none';
         if (lightboxNext) lightboxNext.style.display = hasMultiple ? 'flex' : 'none';
@@ -269,7 +254,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         currentImageIndex += direction;
 
-        // Loop around
+        
         if (currentImageIndex < 0) {
             currentImageIndex = album.images.length - 1;
         } else if (currentImageIndex >= album.images.length) {
@@ -286,7 +271,7 @@ document.addEventListener('DOMContentLoaded', function () {
         currentImageIndex = 0;
     }
 
-    // Delegate lightbox opening to parent (since cards are dynamic)
+    
     document.getElementById('galleryGrid').addEventListener('click', function (e) {
         var card = e.target.closest('.art-card');
         if (card) {
@@ -297,12 +282,12 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // Close lightbox on × button
+    
     if (lightboxClose) {
         lightboxClose.addEventListener('click', closeLightbox);
     }
 
-    // Navigation arrows
+    
     if (lightboxPrev) {
         lightboxPrev.addEventListener('click', function (e) {
             e.stopPropagation();
@@ -317,7 +302,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Close lightbox on Escape key
+    
     document.addEventListener('keydown', function (e) {
         if (lightbox.classList.contains('active')) {
             if (e.key === 'Escape') {
@@ -330,7 +315,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // Close lightbox when clicking outside content
+   
     if (lightbox) {
         lightbox.addEventListener('click', function (e) {
             if (e.target === lightbox) {
@@ -339,7 +324,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Touch swipe support for lightbox on mobile
+    
     var touchStartX = 0;
     var touchEndX = 0;
     var isSwiping = false;
@@ -362,9 +347,9 @@ document.addEventListener('DOMContentLoaded', function () {
             var swipeDistance = touchStartX - touchEndX;
             if (Math.abs(swipeDistance) > 50) {
                 if (swipeDistance > 0) {
-                    navigateLightbox(1); // Swipe left → next
+                    navigateLightbox(1); 
                 } else {
-                    navigateLightbox(-1); // Swipe right → previous
+                    navigateLightbox(-1); 
                 }
             }
             touchStartX = 0;
@@ -372,7 +357,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }, { passive: true });
     }
 
-    // Keyboard navigation for dynamically generated cards (event delegation)
+    
     document.getElementById('galleryGrid').addEventListener('keydown', function (e) {
         var card = e.target.closest('.art-card');
         if (card && (e.key === 'Enter' || e.key === ' ')) {
@@ -384,14 +369,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-/* ------------------------------------------
-       6. SPAM-PROTECTED EMAIL REVEAL
-    ------------------------------------------ */
-    // Email is NOT stored in plaintext anywhere — it's encoded as character codes
-    // Decode function: each number is a charCode, shifted by -1 to prevent simple scraping
-    // Encoded: 'tracyrenzfaura4@gmail.com' → each charCode +1
-// Encoded: each charCode of 'tracyrenzfaura4@gmail.com' + 1
-    // The decode function subtracts 1 to reconstruct the original
+
     var _encodedEmail = [
         117, 115, 98, 100, 122, 115, 102, 111, 123, 103, 98, 118, 115, 98, 53, 65, 104, 110, 98, 106, 109, 47, 100, 112, 110
     ];
@@ -412,7 +390,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var emailRevealBtn = document.getElementById('email-reveal-btn');
 
     function safelyRevealEmail() {
-        // Anti-bot: must have been on page for at least 3 seconds
+        
         if (Date.now() - _pageLoadedAt < 3000) {
             if (emailRevealBtn) {
                 emailRevealBtn.textContent = '⏳ Please wait...';
@@ -423,7 +401,7 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
-        // Anti-bot: check if a real mouse event occurred (bots simulate clicks via JS)
+        
         if (_emailRevealed) return;
         _emailRevealed = true;
 
@@ -432,7 +410,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         if (emailDisplay) {
-            // Build mailto link with anti-spam attributes
+            
             var link = document.createElement('a');
             link.href = 'mailto:' + _realEmail;
             link.textContent = _realEmail;
@@ -442,13 +420,13 @@ document.addEventListener('DOMContentLoaded', function () {
             emailDisplay.appendChild(link);
         }
 
-        // Hide the reveal button
+        
         if (emailRevealBtn) {
             emailRevealBtn.style.display = 'none';
         }
     }
 
-    // Reveal on button click
+    
     if (emailRevealBtn) {
         emailRevealBtn.addEventListener('click', function (e) {
             e.preventDefault();
@@ -456,9 +434,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-// Also reveal on hover (after a 1-second intentional hold) — only if a real mouse is used
-    // The timer is cleared on mouseleave, so the email only unmasks if the user
-    // intentionally hovers over the button for the full duration.
+
     var hoverTimer = null;
     if (emailRevealBtn) {
         emailRevealBtn.addEventListener('mouseenter', function () {
@@ -475,9 +451,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    /* ------------------------------------------
-       7. ACTIVE NAV LINK ON SCROLL
-    ------------------------------------------ */
+    
     var sections = document.querySelectorAll('section[id]');
 
     function updateActiveNavLink() {
@@ -501,10 +475,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     window.addEventListener('scroll', updateActiveNavLink, { passive: true });
 
-    /* ------------------------------------------
-       8. SCROLL-TRIGGERED ANIMATIONS (Intersection Observer)
-    ------------------------------------------ */
-    // Check if IntersectionObserver is supported
+   
     if ('IntersectionObserver' in window) {
         var animateElements = document.querySelectorAll(
             '.gallery-grid .art-card, ' +
@@ -533,7 +504,7 @@ document.addEventListener('DOMContentLoaded', function () {
             observer.observe(el);
         });
     } else {
-        // Fallback for older browsers: show everything immediately
+        
         var els = document.querySelectorAll(
             '.gallery-grid .art-card, ' +
             '.about-content, ' +
@@ -546,9 +517,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    /* ------------------------------------------
-       9. SMOOTH SCROLL FOR ANCHOR LINKS (fallback)
-    ------------------------------------------ */
     document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
         anchor.addEventListener('click', function (e) {
             var targetId = this.getAttribute('href');
@@ -569,12 +537,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    /* ------------------------------------------
-       10. KEYBOARD NAVIGATION SUPPORT
-    ------------------------------------------ */
-    // Art cards keyboard navigation is handled via event delegation in section 5
-
-    // Filter buttons keyboard support
+    
     filterButtons.forEach(function (btn) {
         btn.setAttribute('tabindex', '0');
         btn.addEventListener('keydown', function (e) {
@@ -585,12 +548,4 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-}); // End DOMContentLoaded
-
-
-// images/digital-art-1.jpg    → your digital art piece
-//images/3d-print-1.jpg       → your 3D printed object photo
-//images/pcb-design-1.jpg     → your PCB board screenshot/photo
-//images/keychain-1.jpg       → your engraved keychain photo
-//images/bamboo-pen-1.jpg     → your engraved pen photo
-//images/floor-plan-1.jpg     → your CAD floor plan screenshot
+}); 
