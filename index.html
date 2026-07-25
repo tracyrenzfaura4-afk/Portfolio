@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Remy/Pepper Steak Portfolio</title>
+<link rel="stylesheet" href="styles.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar">
+<div class="nav-container">
+<a href="#home" class="nav-logo">Portfolio</a>
+<ul class="nav-links">
+<li><a href="#home" class="active">Home</a></li>
+<li><a href="#gallery">Gallery</a></li>
+<li><a href="#about">About</a></li>
+<li><a href="#contact">Contact</a></li>
+</ul>
+<div class="hamburger"><span></span><span></span><span></span></div>
+</div>
+</nav>
+<section id="home" class="hero">
+<div class="hero-content">
+<div class="hero-text">
+<p class="hero-subtitle">Welcome to my creative workshop</p>
+<h1 class="hero-title">Remy/Pepper Steak <span class="highlight">Portfolio</span></h1>
+<p class="hero-description">Bridging creativity and technology</p>
+<div class="hero-buttons">
+<a href="#gallery" class="btn btn-primary">View Gallery</a>
+<a href="#contact" class="btn btn-secondary">Get in Touch</a>
+</div>
+</div>
+<div class="hero-visual">
+<div class="hero-art-frame">
+<div class="abstract-art">
+<div class="shape shape-1"></div>
+<div class="shape shape-2"></div>
+<div class="shape shape-3"></div>
+<div class="shape shape-4"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="scroll-indicator">
+<span>Scroll to explore</span>
+<div class="scroll-arrow"></div>
+</div>
+</section>
+<section id="gallery" class="gallery">
+<div class="container">
+<div class="section-header">
+<h2>My <span class="highlight">Gallery</span></h2>
+<div class="divider"></div>
+<p>A curated collection of my recent works and personal favorites</p>
+</div>
+<div class="gallery-filters">
+<button class="filter-btn active" data-filter="all">All</button>
+<button class="filter-btn" data-filter="digital">Digital Art</button>
+<button class="filter-btn" data-filter="printing">3D Printing</button>
+<button class="filter-btn" data-filter="pcb">PCB Design</button>
+<button class="filter-btn" data-filter="engraving">Engraving</button>
+<button class="filter-btn" data-filter="cad">CAD and Plans</button>
+</div>
+<div class="gallery-grid">
+<div class="art-card" data-category="digital">
+<div class="art-thumbnail"><img src="images/digital-art-1.jpg" alt="Digital Illustration" loading="lazy"></div>
+<div class="art-info"><h3>Digital Illustration</h3><p class="art-medium">Digital Art</p><p class="art-year">2024</p></div>
+</div>
+<div class="art-card" data-category="printing">
+<div class="art-thumbnail"><img src="images/3d-print-1.jpg" alt="3D Printed Sculpture" loading="lazy"></div>
+<div class="art-info"><h3>3D Printed Sculpture</h3><p class="art-medium">3D Printing - PLA</p><p class="art-year">2024</p></div>
+</div>
+<div class="art-card" data-category="pcb">
+<div class="art-thumbnail"><img src="images/pcb-design-1.jpg" alt="Custom PCB Board" loading="lazy"></div>
+<div class="art-info"><h3>Custom PCB Board</h3><p class="art-medium">PCB Design - KiCad</p><p class="art-year">2024</p></div>
+</div>
+<div class="art-card" data-category="engraving">
+<div class="art-thumbnail"><img src="images/keychain-1.jpg" alt="Custom Keychain Set" loading="lazy"></div>
+<div class="art-info"><h3>Custom Keychain Set</h3><p class="art-medium">Laser Engraved Wood</p><p class="art-year">2024</p></div>
+</div>
+<div class="art-card" data-category="engraving">
+<div class="art-thumbnail"><img src="images/bamboo-pen-1.jpg" alt="Bamboo Pen Set" loading="lazy"></div>
+<div class="art-info"><h3>Bamboo Pen Set</h3><p class="art-medium">Laser Engraved Bamboo</p><p class="art-year">2024</p></div>
+</div>
+<div class="art-card" data-category="cad">
+<div class="art-thumbnail"><img src="images/floor-plan-1.jpg" alt="Residential Floor Plan" loading="lazy"></div>
+<div class="art-info"><h3>Residential Floor Plan</h3><p class="art-medium">CAD Model - AutoCAD</p><p class="art-year">2024</p></div>
+</div>
+</div>
+</div>
+</section>
+<section id="about" class="about">
+<div class="container">
+<div class="about-content">
+<div class="about-image">
+<div class="artist-portrait-frame">
+<div class="artist-portrait"><span class="artist-avatar">A</span></div>
+</div>
+</div>
+<div class="about-text">
+<h2>About the <span class="highlight">Maker</span></h2>
+<div class="divider"></div>
+<p>Hi! I am a multidisciplinary maker and designer. My work spans digital art, 3D printing, PCB design, laser engraving on wood and bamboo, custom keychains, precision pens, CAD modeling, and architectural floor plans.</p>
+<div class="about-stats">
+<div class="stat"><span class="stat-number">50+</span><span class="stat-label">Projects Made</span></div>
+<div class="stat"><span class="stat-number">3+</span><span class="stat-label">Years Making</span></div>
+<div class="stat"><span class="stat-number">6</span><span class="stat-label">Disciplines</span></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="contact" class="contact">
+<div class="container">
+<div class="section-header">
+<h2>Get in <span class="highlight">Touch</span></h2>
+<div class="divider"></div>
+<p>Interested in a commission? I would love to hear from you!</p>
+</div>
+<div class="contact-content">
+<form class="contact-form" id="contactForm">
+<div class="form-group"><input type="text" id="name" name="name" placeholder="Your Name" required></div>
+<div class="form-group"><input type="email" id="email" name="email" placeholder="Your Email" required></div>
+<div class="form-group"><input type="text" id="subject" name="subject" placeholder="Subject"></div>
+<div class="form-group"><textarea id="message" name="message" rows="5" placeholder="Your Message" required></textarea></div>
+<button type="submit" class="btn btn-primary">Send Message</button>
+</form>
+<div class="contact-info">
+<div class="contact-item"><span class="contact-icon">E</span>
+<div><h4>Email</h4><p>portfolio@example.com</p></div></div>
+<div class="contact-item"><span class="contact-icon">L</span>
+<div><h4>Location</h4><p>United States</p></div></div>
+<div class="contact-item"><span class="contact-icon">S</span>
+<div><h4>Social</h4>
+<div class="social-links">
+<a href="#" class="social-link" title="Instagram">IG</a>
+<a href="#" class="social-link" title="Behance">Be</a>
+<a href="#" class="social-link" title="DeviantArt">DA</a>
+</div></div></div></div>
+</div>
+</div>
+</div>
+</section>
+<footer class="footer">
+<div class="container">
+<div class="footer-content">
+<p>&copy; 2025 Remy/Pepper Steak Portfolio. All rights reserved.</p>
+<p>Made with passion and a 3D printer</p>
+</div>
+</div>
+</footer>
+<div id="lightbox" class="lightbox">
+<span class="lightbox-close">&times;</span>
+<div class="lightbox-content">
+<div class="lightbox-art-display"><img id="lightbox-image" src="" alt="Artwork"></div>
+<div class="lightbox-details">
+<h3 id="lightbox-title">Artwork Title</h3>
+<p id="lightbox-medium">Medium</p>
+<p id="lightbox-year">Year</p>
+<p id="lightbox-description">Description</p>
+</div>
+</div>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
