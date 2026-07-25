@@ -123,12 +123,15 @@ document.addEventListener('DOMContentLoaded', function () {
         {
             title: 'CAD and Plans',
             category: 'cad',
-            coverImage: 'images/floor-plan-1.jpg',
+            coverImage: 'images/CAD-art1.jpg',
             medium: 'CAD Model - AutoCAD',
             year: '2024',
-            description: 'Detailed 2D CAD floor plans for residential projects, including dimensioning, furniture layout, room labels, and electrical/plumbing schematics.',
+            description: 'Detailed 2D CAD floor plans and 3D models for residential and mechanical projects, with precise dimensioning and schematics.',
             images: [
-                { src: 'images/floor-plan-1.jpg', title: 'Residential Floor Plan' }
+                { src: 'images/CAD-art1.jpg', title: 'CAD Design 1' },
+                { src: 'images/CAD-art2.jpg', title: 'CAD Design 2' },
+                { src: 'images/CAD-art3.jpg', title: 'CAD Design 3' },
+                { src: 'images/CAD-art4.jpg', title: 'CAD Design 4' }
             ]
         }
     ];
@@ -334,6 +337,39 @@ document.addEventListener('DOMContentLoaded', function () {
                 closeLightbox();
             }
         });
+    }
+
+    // Touch swipe support for lightbox on mobile
+    var touchStartX = 0;
+    var touchEndX = 0;
+    var isSwiping = false;
+
+    if (lightboxImage) {
+        lightboxImage.addEventListener('touchstart', function (e) {
+            touchStartX = e.changedTouches[0].screenX;
+            isSwiping = true;
+        }, { passive: true });
+
+        lightboxImage.addEventListener('touchmove', function (e) {
+            if (isSwiping) {
+                touchEndX = e.changedTouches[0].screenX;
+            }
+        }, { passive: true });
+
+        lightboxImage.addEventListener('touchend', function (e) {
+            if (!isSwiping) return;
+            isSwiping = false;
+            var swipeDistance = touchStartX - touchEndX;
+            if (Math.abs(swipeDistance) > 50) {
+                if (swipeDistance > 0) {
+                    navigateLightbox(1); // Swipe left → next
+                } else {
+                    navigateLightbox(-1); // Swipe right → previous
+                }
+            }
+            touchStartX = 0;
+            touchEndX = 0;
+        }, { passive: true });
     }
 
     // Keyboard navigation for dynamically generated cards (event delegation)

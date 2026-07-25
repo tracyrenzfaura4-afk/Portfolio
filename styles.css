@@ -1651,3 +1651,372 @@ ul {
     }
 }
 
+/* ============================================
+   MOBILE-OPTIMIZED OVERRIDES
+   Full mobile experience matching desktop quality
+   ============================================ */
+
+/* --- Extra small devices (phones, < 400px) --- */
+@media (max-width: 399px) {
+    .hero-title {
+        font-size: 1.8rem;
+    }
+    .hero-subtitle {
+        font-size: 0.85rem;
+        letter-spacing: 2px;
+    }
+    .hero-description {
+        font-size: 0.95rem;
+    }
+    .hero-art-frame {
+        width: 190px;
+        height: 190px;
+    }
+    .shape-1 { width: 70px; height: 70px; }
+    .shape-2 { width: 55px; height: 55px; }
+    .shape-3 { width: 40px; height: 40px; }
+    .shape-4 { width: 90px; height: 90px; }
+    .section-header h2 {
+        font-size: 1.5rem;
+    }
+    .section-header p {
+        font-size: 0.9rem;
+    }
+    .gallery-grid {
+        gap: 14px;
+    }
+    .art-thumbnail {
+        height: 200px;
+    }
+    .art-info h3 {
+        font-size: 1rem;
+    }
+    .art-info {
+        padding: 14px 16px;
+    }
+    .about-stats {
+        gap: 16px;
+    }
+    .stat-number {
+        font-size: 1.5rem;
+    }
+    .artist-portrait-frame {
+        width: 240px;
+        height: 290px;
+    }
+    .contact-info {
+        padding: 18px;
+    }
+    .lightbox {
+        padding: 10px;
+    }
+    .lightbox-art-display {
+        height: 180px;
+    }
+    .lightbox-details {
+        padding: 16px;
+    }
+    .lightbox-details h3 {
+        font-size: 1.2rem;
+    }
+    .lightbox-details #lightbox-description {
+        font-size: 0.85rem;
+    }
+    .lightbox-close {
+        top: 12px;
+        right: 16px;
+        width: 40px;
+        height: 40px;
+        font-size: 1.8rem;
+    }
+    .filter-btn {
+        padding: 8px 16px;
+        font-size: 0.8rem;
+    }
+    .container {
+        padding: 0 14px;
+    }
+}
+
+/* --- Mobile 480px refined --- */
+@media (max-width: 480px) {
+    .nav-logo {
+        font-size: 1.3rem;
+    }
+    .nav-links a {
+        font-size: 1.3rem;
+    }
+    .hero {
+        padding: 90px 14px 30px;
+    }
+    .hero-content {
+        gap: 28px;
+    }
+    .hero-buttons {
+        gap: 12px;
+    }
+    .hero-art-frame {
+        width: 220px;
+        height: 220px;
+    }
+    .artist-portrait-frame {
+        width: 260px;
+        height: 310px;
+    }
+    .about-text h2 {
+        font-size: 1.8rem;
+    }
+    .about-text p {
+        font-size: 0.95rem;
+    }
+    .about-stats {
+        flex-direction: column;
+        gap: 20px;
+        align-items: center;
+    }
+    .stat {
+        align-items: center;
+    }
+    .stat-number {
+        font-size: 1.6rem;
+    }
+    .contact-item {
+        gap: 12px;
+    }
+    .contact-svg {
+        width: 36px;
+        height: 36px;
+        padding: 8px;
+    }
+    .section-header {
+        margin-bottom: 36px;
+    }
+    .section-header h2 {
+        font-size: 1.7rem;
+    }
+    .social-link {
+        width: 38px;
+        height: 38px;
+    }
+    .lightbox {
+        padding: 12px;
+    }
+    .lightbox-content {
+        gap: 14px;
+    }
+    .lightbox-art-display {
+        height: 220px;
+    }
+    .lightbox-details {
+        padding: 18px;
+    }
+    .lightbox-nav {
+        width: 36px;
+        height: 36px;
+        font-size: 1rem;
+    }
+    .footer-content {
+        font-size: 0.8rem;
+    }
+}
+
+/* --- Mobile 768px refined --- */
+@media (max-width: 768px) {
+    .nav-logo {
+        font-size: 1.4rem;
+    }
+    .hero-content {
+        gap: 32px;
+    }
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    .hero-description {
+        font-size: 1.05rem;
+    }
+    .hero-art-frame {
+        width: 260px;
+        height: 260px;
+    }
+    .section-header {
+        margin-bottom: 40px;
+    }
+    .section-header h2 {
+        font-size: 2rem;
+    }
+    .gallery-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 22px;
+    }
+    .art-thumbnail {
+        height: 240px;
+    }
+    .about-content {
+        gap: 40px;
+    }
+    .about-text h2 {
+        font-size: 2rem;
+    }
+    .about-stats {
+        gap: 28px;
+    }
+    .stat-number {
+        font-size: 1.7rem;
+    }
+    .artist-portrait-frame {
+        width: 280px;
+        height: 340px;
+    }
+    .contact-content {
+        gap: 28px;
+    }
+    .contact-info {
+        padding: 28px;
+    }
+    .contact-svg {
+        width: 40px;
+        height: 40px;
+    }
+    .lightbox {
+        padding: 20px;
+    }
+    .lightbox-content {
+        gap: 16px;
+    }
+    .lightbox-art-display {
+        height: 280px;
+    }
+    .lightbox-details {
+        padding: 22px;
+    }
+    .lightbox-details h3 {
+        font-size: 1.6rem;
+    }
+    .lightbox-nav {
+        width: 40px;
+        height: 40px;
+    }
+    .filter-btn {
+        padding: 9px 18px;
+        font-size: 0.85rem;
+    }
+    .gallery-filters {
+        gap: 8px;
+        margin-bottom: 30px;
+    }
+}
+
+/* --- Landscape mobile optimization --- */
+@media (max-height: 500px) and (orientation: landscape) {
+    .hero {
+        min-height: auto;
+        padding: 80px 24px 30px;
+    }
+    .hero-content {
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+    }
+    .hero-title {
+        font-size: 2.2rem;
+    }
+    .hero-art-frame {
+        width: 180px;
+        height: 180px;
+    }
+    .hero-visual {
+        order: 2;
+    }
+    .hero-text {
+        order: 1;
+    }
+    .scroll-indicator {
+        display: none;
+    }
+    .navbar {
+        padding: 12px 0;
+    }
+    .lightbox {
+        padding: 8px;
+    }
+    .lightbox-content {
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+    }
+    .lightbox-art-display {
+        height: 180px;
+    }
+    .lightbox-details {
+        padding: 12px;
+    }
+    .lightbox-details h3 {
+        font-size: 1.2rem;
+    }
+    .lightbox-nav {
+        width: 32px;
+        height: 32px;
+        font-size: 0.9rem;
+    }
+    .lightbox-close {
+        top: 8px;
+        right: 12px;
+        width: 34px;
+        height: 34px;
+        font-size: 1.4rem;
+    }
+    .section-header {
+        margin-bottom: 24px;
+    }
+    .section-header h2 {
+        font-size: 1.6rem;
+    }
+    .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px;
+    }
+    .art-thumbnail {
+        height: 150px;
+    }
+    .about-content {
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+    }
+    .artist-portrait-frame {
+        width: 200px;
+        height: 240px;
+    }
+    .about-stats {
+        gap: 16px;
+        margin-top: 20px;
+        padding-top: 20px;
+    }
+    .stat-number {
+        font-size: 1.3rem;
+    }
+}
+
+/* --- Tablet landscape and small desktop --- */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .hero-title {
+        font-size: 3.2rem;
+    }
+    .hero-art-frame {
+        width: 300px;
+        height: 300px;
+    }
+    .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .about-content {
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+    }
+    .artist-portrait-frame {
+        width: 280px;
+        height: 340px;
+    }
+    .about-text h2 {
+        font-size: 2.2rem;
+    }
+}
+
+
