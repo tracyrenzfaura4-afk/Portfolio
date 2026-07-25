@@ -87,7 +87,9 @@ document.addEventListener('DOMContentLoaded', function () {
             year: '2024',
             description: '3D printed decorative sculptures modeled in Fusion 360, printed with PLA filament at fine layer heights for smooth, detailed finishes.',
             images: [
-                { src: 'images/3d-print-1.jpg', title: '3D Printed Sculpture' }
+                { src: 'images/3d-print-1.jpg', title: '3D Printed Sculpture 1' },
+                { src: 'images/3d-print-2.jpg', title: '3D Printed Sculpture 2' },
+                { src: 'images/3d-print-3.jpg', title: '3D Printed Sculpture 3' }
             ]
         },
         {
@@ -98,19 +100,24 @@ document.addEventListener('DOMContentLoaded', function () {
             year: '2024',
             description: 'Custom PCB designs for IoT sensor projects, featuring 2-layer routing, through-hole and SMD components, and custom silkscreen labeling.',
             images: [
-                { src: 'images/pcb-design-1.jpg', title: 'Custom PCB Board' }
+                { src: 'images/pcb-design-1.jpg', title: 'PCB Design 1' },
+                { src: 'images/pcb-design-2.jpg', title: 'PCB Design 2' },
+                { src: 'images/pcb-design-3.jpg', title: 'PCB Design 3' },
+                { src: 'images/pcb-design-4.jpg', title: 'PCB Design 4' }
             ]
         },
-        {
+{
             title: 'Engraving',
             category: 'engraving',
-            coverImage: 'images/keychain-1.jpg',
+            coverImage: 'images/engraving-print1.jpg',
             medium: 'Laser Engraving',
             year: '2024',
-            description: 'A collection of laser-engraved creations including wooden keychains and personalized bamboo pens with custom designs and patterns.',
+            description: 'A collection of laser-engraved creations including wooden keychains, personalized bamboo pens, and custom engraved prints with intricate designs and patterns.',
             images: [
-                { src: 'images/keychain-1.jpg', title: 'Custom Keychain Set' },
-                { src: 'images/bamboo-pen-1.jpg', title: 'Bamboo Pen Set' }
+                { src: 'images/engraving-print1.jpg', title: 'Engraving Print 1' },
+                { src: 'images/engraving-print2.jpg', title: 'Engraving Print 2' },
+                { src: 'images/engraving-print3.jpg', title: 'Engraving Print 3' },
+                { src: 'images/engraving-print4.jpg', title: 'Engraving Print 4' }
             ]
         },
         {
@@ -341,85 +348,95 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    /* ------------------------------------------
-       6. CONTACT FORM HANDLING
+/* ------------------------------------------
+       6. SPAM-PROTECTED EMAIL REVEAL
     ------------------------------------------ */
-    const contactForm = document.getElementById('contactForm');
+    // Email is NOT stored in plaintext anywhere — it's encoded as character codes
+    // Decode function: each number is a charCode, shifted by -1 to prevent simple scraping
+    // Encoded: 'tracyrenzfaura4@gmail.com' → each charCode +1
+// Encoded: each charCode of 'tracyrenzfaura4@gmail.com' + 1
+    // The decode function subtracts 1 to reconstruct the original
+    var _encodedEmail = [
+        117, 115, 98, 100, 122, 115, 102, 111, 123, 103, 98, 118, 115, 98, 53, 65, 104, 110, 98, 106, 109, 47, 100, 112, 110
+    ];
 
-    if (contactForm) {
-        contactForm.addEventListener('submit', function (e) {
+    function _decodeEmail(arr) {
+        var s = '';
+        for (var i = 0; i < arr.length; i++) {
+            s += String.fromCharCode(arr[i] - 1);
+        }
+        return s;
+    }
+
+    var _realEmail = null;
+    var _pageLoadedAt = Date.now();
+    var _emailRevealed = false;
+
+    var emailDisplay = document.getElementById('email-display');
+    var emailRevealBtn = document.getElementById('email-reveal-btn');
+
+    function safelyRevealEmail() {
+        // Anti-bot: must have been on page for at least 3 seconds
+        if (Date.now() - _pageLoadedAt < 3000) {
+            if (emailRevealBtn) {
+                emailRevealBtn.textContent = '⏳ Please wait...';
+                setTimeout(function () {
+                    emailRevealBtn.textContent = '📧 Show Email';
+                }, 2000);
+            }
+            return;
+        }
+
+        // Anti-bot: check if a real mouse event occurred (bots simulate clicks via JS)
+        if (_emailRevealed) return;
+        _emailRevealed = true;
+
+        if (!_realEmail) {
+            _realEmail = _decodeEmail(_encodedEmail);
+        }
+
+        if (emailDisplay) {
+            // Build mailto link with anti-spam attributes
+            var link = document.createElement('a');
+            link.href = 'mailto:' + _realEmail;
+            link.textContent = _realEmail;
+            link.className = 'email-link';
+            link.setAttribute('rel', 'nofollow noreferrer noopener');
+            emailDisplay.innerHTML = '';
+            emailDisplay.appendChild(link);
+        }
+
+        // Hide the reveal button
+        if (emailRevealBtn) {
+            emailRevealBtn.style.display = 'none';
+        }
+    }
+
+    // Reveal on button click
+    if (emailRevealBtn) {
+        emailRevealBtn.addEventListener('click', function (e) {
             e.preventDefault();
-
-            // Get form values
-            var name = document.getElementById('name').value.trim();
-            var email = document.getElementById('email').value.trim();
-            var subject = document.getElementById('subject').value.trim();
-            var message = document.getElementById('message').value.trim();
-
-            // Basic validation
-            if (!name || !email || !message) {
-                showFormMessage('Please fill in all required fields.', 'error');
-                return;
-            }
-
-            if (!isValidEmail(email)) {
-                showFormMessage('Please enter a valid email address.', 'error');
-                return;
-            }
-
-            // Simulate sending (in production, connect to a backend)
-            var submitBtn = contactForm.querySelector('button[type="submit"]');
-            var originalText = submitBtn.textContent;
-            submitBtn.textContent = 'Sending...';
-            submitBtn.disabled = true;
-
-            setTimeout(function () {
-                showFormMessage('Thank you, ' + name + '! Your message has been sent. I\'ll get back to you soon!', 'success');
-                contactForm.reset();
-                submitBtn.textContent = originalText;
-                submitBtn.disabled = false;
-            }, 1200);
+            safelyRevealEmail();
         });
     }
 
-    function isValidEmail(email) {
-        // Simple email validation pattern
-        var pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return pattern.test(email);
-    }
-
-    function showFormMessage(msg, type) {
-        // Remove any existing message
-        var existingMsg = document.querySelector('.form-message');
-        if (existingMsg) {
-            existingMsg.remove();
-        }
-
-        var messageEl = document.createElement('div');
-        messageEl.className = 'form-message form-message--' + type;
-        messageEl.textContent = msg;
-        messageEl.style.cssText = 'padding: 12px 16px; border-radius: 10px; margin-top: 12px; font-size: 0.9rem; text-align: center; animation: fadeInUp 0.3s ease-out;';
-
-        if (type === 'success') {
-            messageEl.style.background = 'rgba(34, 197, 94, 0.15)';
-            messageEl.style.color = '#4ade80';
-            messageEl.style.border = '1px solid rgba(34, 197, 94, 0.3)';
-        } else {
-            messageEl.style.background = 'rgba(239, 68, 68, 0.15)';
-            messageEl.style.color = '#f87171';
-            messageEl.style.border = '1px solid rgba(239, 68, 68, 0.3)';
-        }
-
-        contactForm.appendChild(messageEl);
-
-        // Auto-remove success message after 5 seconds
-        if (type === 'success') {
-            setTimeout(function () {
-                if (messageEl.parentNode) {
-                    messageEl.remove();
-                }
-            }, 5000);
-        }
+// Also reveal on hover (after a 1-second intentional hold) — only if a real mouse is used
+    // The timer is cleared on mouseleave, so the email only unmasks if the user
+    // intentionally hovers over the button for the full duration.
+    var hoverTimer = null;
+    if (emailRevealBtn) {
+        emailRevealBtn.addEventListener('mouseenter', function () {
+            if (_emailRevealed) return;
+            hoverTimer = setTimeout(function () {
+                safelyRevealEmail();
+            }, 1000);
+        });
+        emailRevealBtn.addEventListener('mouseleave', function () {
+            if (hoverTimer) {
+                clearTimeout(hoverTimer);
+                hoverTimer = null;
+            }
+        });
     }
 
     /* ------------------------------------------
