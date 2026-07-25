@@ -63,137 +63,228 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     /* ------------------------------------------
-       3. GALLERY FILTERING
+       3. ARTWORK DATA & DYNAMIC GALLERY RENDERER
     ------------------------------------------ */
-    const filterButtons = document.querySelectorAll('.filter-btn');
-    const artCards = document.querySelectorAll('.art-card');
+    // Central album data array — each album is one category with multiple images
+    const albums = [
+        {
+            title: 'Digital Art',
+            category: 'digital',
+            coverImage: 'images/digital-art-1.jpg',
+            medium: 'Digital Art',
+            year: '2024',
+            description: 'A curated collection of vibrant digital illustrations exploring color theory, advanced blending techniques, and unique color palettes.',
+            images: [
+                { src: 'images/digital-art-1.jpg', title: 'Digital Illustration 1' },
+                { src: 'images/digital-art-2.jpg', title: 'Digital Illustration 2' }
+            ]
+        },
+        {
+            title: '3D Printing',
+            category: 'printing',
+            coverImage: 'images/3d-print-1.jpg',
+            medium: '3D Printing - PLA',
+            year: '2024',
+            description: '3D printed decorative sculptures modeled in Fusion 360, printed with PLA filament at fine layer heights for smooth, detailed finishes.',
+            images: [
+                { src: 'images/3d-print-1.jpg', title: '3D Printed Sculpture' }
+            ]
+        },
+        {
+            title: 'PCB Design',
+            category: 'pcb',
+            coverImage: 'images/pcb-design-1.jpg',
+            medium: 'PCB Design - KiCad',
+            year: '2024',
+            description: 'Custom PCB designs for IoT sensor projects, featuring 2-layer routing, through-hole and SMD components, and custom silkscreen labeling.',
+            images: [
+                { src: 'images/pcb-design-1.jpg', title: 'Custom PCB Board' }
+            ]
+        },
+        {
+            title: 'Engraving',
+            category: 'engraving',
+            coverImage: 'images/keychain-1.jpg',
+            medium: 'Laser Engraving',
+            year: '2024',
+            description: 'A collection of laser-engraved creations including wooden keychains and personalized bamboo pens with custom designs and patterns.',
+            images: [
+                { src: 'images/keychain-1.jpg', title: 'Custom Keychain Set' },
+                { src: 'images/bamboo-pen-1.jpg', title: 'Bamboo Pen Set' }
+            ]
+        },
+        {
+            title: 'CAD and Plans',
+            category: 'cad',
+            coverImage: 'images/floor-plan-1.jpg',
+            medium: 'CAD Model - AutoCAD',
+            year: '2024',
+            description: 'Detailed 2D CAD floor plans for residential projects, including dimensioning, furniture layout, room labels, and electrical/plumbing schematics.',
+            images: [
+                { src: 'images/floor-plan-1.jpg', title: 'Residential Floor Plan' }
+            ]
+        }
+    ];
 
-    filterButtons.forEach(function (button) {
-        button.addEventListener('click', function () {
-            // Remove active class from all buttons
-            filterButtons.forEach(function (btn) {
-                btn.classList.remove('active');
-            });
+    // Generate gallery cards from the albums data
+    function renderGallery() {
+        var grid = document.getElementById('galleryGrid');
+        if (!grid) return;
 
-            // Add active class to clicked button
-            this.classList.add('active');
+        grid.innerHTML = '';
+        albums.forEach(function (album) {
+            var card = document.createElement('div');
+            card.className = 'art-card';
+            card.setAttribute('data-category', album.category);
+            card.setAttribute('data-album-index', albums.indexOf(album));
+            card.setAttribute('tabindex', '0');
+            card.setAttribute('role', 'button');
 
-            const filterValue = this.getAttribute('data-filter');
+            var itemCount = album.images.length;
+            var countBadge = itemCount > 1 ? '<span class="art-count-badge">' + itemCount + ' pieces</span>' : '';
 
-            // Show/hide art cards based on filter
-            artCards.forEach(function (card) {
-                if (filterValue === 'all') {
+            card.innerHTML =
+                '<div class="art-thumbnail">' +
+                    '<img src="' + album.coverImage + '" alt="' + album.title + '" loading="lazy">' +
+                    countBadge +
+                '</div>' +
+                '<div class="art-info">' +
+                    '<h3>' + album.title + '</h3>' +
+                    '<p class="art-medium">' + album.medium + '</p>' +
+                '</div>';
+
+            grid.appendChild(card);
+        });
+    }
+
+    renderGallery();
+
+    /* ------------------------------------------
+       4. GALLERY FILTERING
+    ------------------------------------------ */
+    var filterButtons = document.querySelectorAll('.filter-btn');
+
+    function applyGalleryFilter(filterValue) {
+        var cards = document.querySelectorAll('.art-card');
+        cards.forEach(function (card) {
+            if (filterValue === 'all') {
+                card.style.display = 'block';
+                card.style.animation = 'none';
+                card.offsetHeight; // Trigger reflow
+                card.style.animation = 'fadeInUp 0.5s ease-out forwards';
+            } else {
+                var category = card.getAttribute('data-category');
+                if (category === filterValue) {
                     card.style.display = 'block';
-                    // Trigger animation
                     card.style.animation = 'none';
                     card.offsetHeight; // Trigger reflow
                     card.style.animation = 'fadeInUp 0.5s ease-out forwards';
                 } else {
-                    const category = card.getAttribute('data-category');
-                    if (category === filterValue) {
-                        card.style.display = 'block';
-                        card.style.animation = 'none';
-                        card.offsetHeight; // Trigger reflow
-                        card.style.animation = 'fadeInUp 0.5s ease-out forwards';
-                    } else {
-                        card.style.display = 'none';
-                    }
+                    card.style.display = 'none';
                 }
+            }
+        });
+    }
+
+    filterButtons.forEach(function (button) {
+        button.addEventListener('click', function () {
+            filterButtons.forEach(function (btn) {
+                btn.classList.remove('active');
             });
+            this.classList.add('active');
+            var filterValue = this.getAttribute('data-filter');
+            applyGalleryFilter(filterValue);
         });
     });
 
     /* ------------------------------------------
-       4. LIGHTBOX MODAL
+       5. LIGHTBOX MODAL (Album Viewer)
     ------------------------------------------ */
-    const lightbox = document.getElementById('lightbox');
-    const lightboxClose = document.querySelector('.lightbox-close');
-    const lightboxTitle = document.getElementById('lightbox-title');
-    const lightboxMedium = document.getElementById('lightbox-medium');
-    const lightboxYear = document.getElementById('lightbox-year');
-    const lightboxDescription = document.getElementById('lightbox-description');
-    const lightboxImage = document.getElementById('lightbox-image');
+    var lightbox = document.getElementById('lightbox');
+    var lightboxClose = document.querySelector('.lightbox-close');
+    var lightboxTitle = document.getElementById('lightbox-title');
+    var lightboxMedium = document.getElementById('lightbox-medium');
+    var lightboxDescription = document.getElementById('lightbox-description');
+    var lightboxImage = document.getElementById('lightbox-image');
+    var lightboxPrev = document.querySelector('.lightbox-nav-prev');
+    var lightboxNext = document.querySelector('.lightbox-nav-next');
+    var lightboxCounter = document.getElementById('lightbox-counter');
 
-    // Artwork data for lightbox content
-    const artworkData = {
-        'Digital Illustration': {
-            title: 'Digital Illustration',
-            medium: 'Digital Art',
-            year: '2024',
-            description: 'A vibrant digital illustration exploring color theory and composition. Created using a combination of digital painting techniques and photo manipulation.',
-            image: 'images/digital-art-1.jpg'
-        },
-        '3D Printed Sculpture': {
-            title: '3D Printed Sculpture',
-            medium: '3D Printing - PLA',
-            year: '2024',
-            description: 'A 3D printed decorative sculpture modeled in Fusion 360. Printed with PLA filament at 0.12mm layer height for a smooth, detailed finish.',
-            image: 'images/3d-print-1.jpg'
-        },
-        'Custom PCB Board': {
-            title: 'Custom PCB Board',
-            medium: 'PCB Design - KiCad',
-            year: '2024',
-            description: 'Custom PCB design for an IoT sensor project. Designed in KiCad with 2-layer routing, through-hole and SMD components, and custom silkscreen labeling.',
-            image: 'images/pcb-design-1.jpg'
-        },
-        'Custom Keychain Set': {
-            title: 'Custom Keychain Set',
-            medium: 'Laser Engraved Wood',
-            year: '2024',
-            description: 'A set of laser-engraved wooden keychains featuring custom designs. Cut and engraved on a CO2 laser from premium birch plywood.',
-            image: 'images/keychain-1.jpg'
-        },
-        'Bamboo Pen Set': {
-            title: 'Bamboo Pen Set',
-            medium: 'Laser Engraved Bamboo',
-            year: '2024',
-            description: 'Personalized bamboo pens with custom laser-engraved text and patterns. Each pen is sanded, engraved, and finished with a natural sealant.',
-            image: 'images/bamboo-pen-1.jpg'
-        },
-        'Residential Floor Plan': {
-            title: 'Residential Floor Plan',
-            medium: 'CAD Model - AutoCAD',
-            year: '2024',
-            description: 'Detailed 2D CAD floor plan for a single-family residence. Includes dimensioning, furniture layout, room labels, and electrical/plumbing schematics.',
-            image: 'images/floor-plan-1.jpg'
-        }
-    };
+    var currentAlbumIndex = -1;
+    var currentImageIndex = 0;
 
-    function openLightbox(card) {
-        var titleEl = card.querySelector('.art-info h3');
-        var title = titleEl ? titleEl.textContent : 'Artwork';
-        var data = artworkData[title] || {
-            title: title,
-            medium: 'Artwork',
-            year: '—',
-            description: 'No description available for this piece.',
-            image: ''
-        };
+    function openAlbum(albumIdx, imgIdx) {
+        var album = albums[albumIdx];
+        if (!album) return;
 
-        lightboxTitle.textContent = data.title;
-        lightboxMedium.textContent = data.medium;
-        lightboxYear.textContent = data.year;
-        lightboxDescription.textContent = data.description;
-        if (lightboxImage) {
-            lightboxImage.src = data.image;
-            lightboxImage.alt = data.title;
-        }
+        currentAlbumIndex = albumIdx;
+        currentImageIndex = imgIdx || 0;
+
+        updateLightboxDisplay();
 
         lightbox.classList.add('active');
         document.body.style.overflow = 'hidden';
     }
 
+    function updateLightboxDisplay() {
+        var album = albums[currentAlbumIndex];
+        if (!album) return;
+
+        var img = album.images[currentImageIndex];
+        if (!img) return;
+
+        lightboxTitle.textContent = album.title;
+        lightboxMedium.textContent = album.medium;
+        lightboxDescription.textContent = album.description;
+
+        if (lightboxImage) {
+            lightboxImage.src = img.src;
+            lightboxImage.alt = img.title;
+        }
+
+        // Update counter
+        if (lightboxCounter) {
+            lightboxCounter.textContent = (currentImageIndex + 1) + ' / ' + album.images.length;
+        }
+
+        // Show/hide navigation arrows based on image count
+        var hasMultiple = album.images.length > 1;
+        if (lightboxPrev) lightboxPrev.style.display = hasMultiple ? 'flex' : 'none';
+        if (lightboxNext) lightboxNext.style.display = hasMultiple ? 'flex' : 'none';
+    }
+
+    function navigateLightbox(direction) {
+        var album = albums[currentAlbumIndex];
+        if (!album || album.images.length <= 1) return;
+
+        currentImageIndex += direction;
+
+        // Loop around
+        if (currentImageIndex < 0) {
+            currentImageIndex = album.images.length - 1;
+        } else if (currentImageIndex >= album.images.length) {
+            currentImageIndex = 0;
+        }
+
+        updateLightboxDisplay();
+    }
+
     function closeLightbox() {
         lightbox.classList.remove('active');
         document.body.style.overflow = '';
+        currentAlbumIndex = -1;
+        currentImageIndex = 0;
     }
 
-    // Open lightbox on card click
-    artCards.forEach(function (card) {
-        card.addEventListener('click', function () {
-            openLightbox(this);
-        });
+    // Delegate lightbox opening to parent (since cards are dynamic)
+    document.getElementById('galleryGrid').addEventListener('click', function (e) {
+        var card = e.target.closest('.art-card');
+        if (card) {
+            var albumIdx = parseInt(card.getAttribute('data-album-index'));
+            if (!isNaN(albumIdx)) {
+                openAlbum(albumIdx, 0);
+            }
+        }
     });
 
     // Close lightbox on × button
@@ -201,10 +292,31 @@ document.addEventListener('DOMContentLoaded', function () {
         lightboxClose.addEventListener('click', closeLightbox);
     }
 
+    // Navigation arrows
+    if (lightboxPrev) {
+        lightboxPrev.addEventListener('click', function (e) {
+            e.stopPropagation();
+            navigateLightbox(-1);
+        });
+    }
+
+    if (lightboxNext) {
+        lightboxNext.addEventListener('click', function (e) {
+            e.stopPropagation();
+            navigateLightbox(1);
+        });
+    }
+
     // Close lightbox on Escape key
     document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape' && lightbox.classList.contains('active')) {
-            closeLightbox();
+        if (lightbox.classList.contains('active')) {
+            if (e.key === 'Escape') {
+                closeLightbox();
+            } else if (e.key === 'ArrowLeft') {
+                navigateLightbox(-1);
+            } else if (e.key === 'ArrowRight') {
+                navigateLightbox(1);
+            }
         }
     });
 
@@ -217,8 +329,20 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // Keyboard navigation for dynamically generated cards (event delegation)
+    document.getElementById('galleryGrid').addEventListener('keydown', function (e) {
+        var card = e.target.closest('.art-card');
+        if (card && (e.key === 'Enter' || e.key === ' ')) {
+            e.preventDefault();
+            var albumIdx = parseInt(card.getAttribute('data-album-index'));
+            if (!isNaN(albumIdx)) {
+                openAlbum(albumIdx, 0);
+            }
+        }
+    });
+
     /* ------------------------------------------
-       5. CONTACT FORM HANDLING
+       6. CONTACT FORM HANDLING
     ------------------------------------------ */
     const contactForm = document.getElementById('contactForm');
 
@@ -299,7 +423,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     /* ------------------------------------------
-       6. ACTIVE NAV LINK ON SCROLL
+       7. ACTIVE NAV LINK ON SCROLL
     ------------------------------------------ */
     var sections = document.querySelectorAll('section[id]');
 
@@ -325,7 +449,7 @@ document.addEventListener('DOMContentLoaded', function () {
     window.addEventListener('scroll', updateActiveNavLink, { passive: true });
 
     /* ------------------------------------------
-       7. SCROLL-TRIGGERED ANIMATIONS (Intersection Observer)
+       8. SCROLL-TRIGGERED ANIMATIONS (Intersection Observer)
     ------------------------------------------ */
     // Check if IntersectionObserver is supported
     if ('IntersectionObserver' in window) {
@@ -370,7 +494,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     /* ------------------------------------------
-       8. SMOOTH SCROLL FOR ANCHOR LINKS (fallback)
+       9. SMOOTH SCROLL FOR ANCHOR LINKS (fallback)
     ------------------------------------------ */
     document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
         anchor.addEventListener('click', function (e) {
@@ -393,19 +517,9 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     /* ------------------------------------------
-       9. KEYBOARD NAVIGATION SUPPORT
+       10. KEYBOARD NAVIGATION SUPPORT
     ------------------------------------------ */
-    // Allow opening lightbox with Enter key on art cards
-    artCards.forEach(function (card) {
-        card.setAttribute('tabindex', '0');
-        card.setAttribute('role', 'button');
-        card.addEventListener('keydown', function (e) {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                openLightbox(this);
-            }
-        });
-    });
+    // Art cards keyboard navigation is handled via event delegation in section 5
 
     // Filter buttons keyboard support
     filterButtons.forEach(function (btn) {
