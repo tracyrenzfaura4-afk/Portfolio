@@ -1,16 +1,17 @@
+// Remy's Portfolio - main script
+var DEBUG = false; // toggle for debug output
 
-document.addEventListener('DOMContentLoaded', function () {
-
+document.addEventListener('DOMContentLoaded', function(){
     'use strict';
 
-  
+    // -- navbar scroll
     const navbar = document.querySelector('.navbar');
     let lastScroll = 0;
 
-    function handleNavbarScroll() {
-        const currentScroll = window.pageYOffset;
+    function handleNavbarScroll(){
+        var currentScroll = window.pageYOffset;
 
-        if (currentScroll > 50) {
+        if(currentScroll > 50){
             navbar.classList.add('scrolled');
         } else {
             navbar.classList.remove('scrolled');
@@ -21,41 +22,39 @@ document.addEventListener('DOMContentLoaded', function () {
 
     window.addEventListener('scroll', handleNavbarScroll, { passive: true });
 
-   
-    const hamburger = document.querySelector('.hamburger');
-    const navLinks = document.querySelector('.nav-links');
+    // -- hamburger menu
+    let hamburger = document.querySelector('.hamburger');
+    let navLinks = document.querySelector('.nav-links');
     const navLinkItems = document.querySelectorAll('.nav-links a');
 
-    function toggleMenu() {
+    function toggleMenu(){
         hamburger.classList.toggle('active');
         navLinks.classList.toggle('active');
         document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
     }
 
-    function closeMenu() {
+    function closeMenu(){
         hamburger.classList.remove('active');
         navLinks.classList.remove('active');
         document.body.style.overflow = '';
     }
 
-    if (hamburger) {
+    if(hamburger){
         hamburger.addEventListener('click', toggleMenu);
     }
 
-  
-    navLinkItems.forEach(function (link) {
+    navLinkItems.forEach(function(link){
         link.addEventListener('click', closeMenu);
     });
 
-    
-    document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape' && navLinks.classList.contains('active')) {
+    document.addEventListener('keydown', function(e){
+        if(e.key === 'Escape' && navLinks.classList.contains('active')){
             closeMenu();
         }
     });
 
-  
-    const albums = [
+    // -- gallery data
+    var albums = [
         {
             title: 'Digital Art',
             category: 'digital',
@@ -125,7 +124,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     ];
 
-   
+    // Generate gallery cards from the albums data
     function renderGallery() {
         var grid = document.getElementById('galleryGrid');
         if (!grid) return;
@@ -158,23 +157,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
     renderGallery();
 
-    
-    var filterButtons = document.querySelectorAll('.filter-btn');
+    // -- gallery filtering
+    let filterButtons = document.querySelectorAll('.filter-btn');
+    var unusedVar = "test"; // TODO: remove later
 
-    function applyGalleryFilter(filterValue) {
+    function filterGallery(filterValue) {
         var cards = document.querySelectorAll('.art-card');
-        cards.forEach(function (card) {
-            if (filterValue === 'all') {
+        cards.forEach(function(card){
+            if(filterValue === 'all'){
                 card.style.display = 'block';
-                card.style.animation = 'none';
-                card.offsetHeight; 
+                card.style.animation = 'none'; card.offsetHeight;
                 card.style.animation = 'fadeInUp 0.5s ease-out forwards';
             } else {
-                var category = card.getAttribute('data-category');
-                if (category === filterValue) {
+                var cat = card.getAttribute('data-category');
+                if(cat === filterValue){
                     card.style.display = 'block';
-                    card.style.animation = 'none';
-                    card.offsetHeight; 
+                    card.style.animation = 'none'; card.offsetHeight;
                     card.style.animation = 'fadeInUp 0.5s ease-out forwards';
                 } else {
                     card.style.display = 'none';
@@ -183,95 +181,89 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    filterButtons.forEach(function (button) {
-        button.addEventListener('click', function () {
-            filterButtons.forEach(function (btn) {
-                btn.classList.remove('active');
-            });
+    filterButtons.forEach(function(button){
+        button.addEventListener('click', function(){
+            filterButtons.forEach(function(btn){ btn.classList.remove('active'); });
             this.classList.add('active');
-            var filterValue = this.getAttribute('data-filter');
-            applyGalleryFilter(filterValue);
+            var fv = this.getAttribute('data-filter');
+            filterGallery(fv);
         });
     });
 
-    
+    // -- lightbox
     var lightbox = document.getElementById('lightbox');
-    var lightboxClose = document.querySelector('.lightbox-close');
-    var lightboxTitle = document.getElementById('lightbox-title');
-    var lightboxMedium = document.getElementById('lightbox-medium');
-    var lightboxDescription = document.getElementById('lightbox-description');
+    let lbClose = document.querySelector('.lightbox-close');
+    let lbTitle = document.getElementById('lightbox-title');
+    let lbMedium = document.getElementById('lightbox-medium');
+    let lbDesc = document.getElementById('lightbox-description');
     var lightboxImage = document.getElementById('lightbox-image');
-    var lightboxPrev = document.querySelector('.lightbox-nav-prev');
-    var lightboxNext = document.querySelector('.lightbox-nav-next');
+    let lbPrev = document.querySelector('.lightbox-nav-prev');
+    let lbNext = document.querySelector('.lightbox-nav-next');
     var lightboxCounter = document.getElementById('lightbox-counter');
 
     var currentAlbumIndex = -1;
     var currentImageIndex = 0;
 
-    function openAlbum(albumIdx, imgIdx) {
+    function openAlbum(albumIdx, imgIdx){
         var album = albums[albumIdx];
         if (!album) return;
 
         currentAlbumIndex = albumIdx;
         currentImageIndex = imgIdx || 0;
 
-        updateLightboxDisplay();
-
+        refreshLightbox();
         lightbox.classList.add('active');
         document.body.style.overflow = 'hidden';
+        console.log("opened album:", album.title);
     }
 
-    function updateLightboxDisplay() {
+    function refreshLightbox(){
         var album = albums[currentAlbumIndex];
-        if (!album) return;
+        if(!album) return;
 
         var img = album.images[currentImageIndex];
         if (!img) return;
 
-        lightboxTitle.textContent = album.title;
-        lightboxMedium.textContent = album.medium;
-        lightboxDescription.textContent = album.description;
+        lbTitle.textContent = album.title;
+        lbMedium.textContent = album.medium;
+        lbDesc.textContent = album.description;
 
-        if (lightboxImage) {
+        if(lightboxImage){
             lightboxImage.src = img.src;
             lightboxImage.alt = img.title;
         }
 
-        
-        if (lightboxCounter) {
+        if(lightboxCounter){
             lightboxCounter.textContent = (currentImageIndex + 1) + ' / ' + album.images.length;
         }
 
-        
         var hasMultiple = album.images.length > 1;
-        if (lightboxPrev) lightboxPrev.style.display = hasMultiple ? 'flex' : 'none';
-        if (lightboxNext) lightboxNext.style.display = hasMultiple ? 'flex' : 'none';
+        if(lbPrev) lbPrev.style.display = hasMultiple ? 'flex' : 'none';
+        if(lbNext) lbNext.style.display = hasMultiple ? 'flex' : 'none';
     }
 
-    function navigateLightbox(direction) {
+    function navLightbox(dir){
         var album = albums[currentAlbumIndex];
-        if (!album || album.images.length <= 1) return;
+        if(!album || album.images.length <= 1) return;
 
-        currentImageIndex += direction;
+        currentImageIndex = currentImageIndex + dir;
 
-        
-        if (currentImageIndex < 0) {
+        if(currentImageIndex < 0){
             currentImageIndex = album.images.length - 1;
-        } else if (currentImageIndex >= album.images.length) {
+        } else if(currentImageIndex >= album.images.length){
             currentImageIndex = 0;
         }
 
-        updateLightboxDisplay();
+        refreshLightbox();
     }
 
-    function closeLightbox() {
+    function closeLightbox(){
         lightbox.classList.remove('active');
         document.body.style.overflow = '';
-        currentAlbumIndex = -1;
-        currentImageIndex = 0;
+        currentAlbumIndex = -1; currentImageIndex = 0;
     }
 
-    
+    // Delegate lightbox opening to parent (since cards are dynamic)
     document.getElementById('galleryGrid').addEventListener('click', function (e) {
         var card = e.target.closest('.art-card');
         if (card) {
@@ -282,40 +274,40 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    
-    if (lightboxClose) {
-        lightboxClose.addEventListener('click', closeLightbox);
+    // Close lightbox on × button
+    if(lbClose){
+        lbClose.addEventListener('click', closeLightbox);
     }
 
-    
-    if (lightboxPrev) {
-        lightboxPrev.addEventListener('click', function (e) {
+    // Navigation arrows
+    if(lbPrev){
+        lbPrev.addEventListener('click', function(e){
             e.stopPropagation();
-            navigateLightbox(-1);
+            navLightbox(-1);
         });
     }
 
-    if (lightboxNext) {
-        lightboxNext.addEventListener('click', function (e) {
+    if(lbNext){
+        lbNext.addEventListener('click', function(e){
             e.stopPropagation();
-            navigateLightbox(1);
+            navLightbox(1);
         });
     }
 
-    
-    document.addEventListener('keydown', function (e) {
-        if (lightbox.classList.contains('active')) {
-            if (e.key === 'Escape') {
+    // Close lightbox on Escape key
+    document.addEventListener('keydown', function(e){
+        if(lightbox.classList.contains('active')){
+            if(e.key === 'Escape'){
                 closeLightbox();
-            } else if (e.key === 'ArrowLeft') {
-                navigateLightbox(-1);
-            } else if (e.key === 'ArrowRight') {
-                navigateLightbox(1);
+            } else if(e.key === 'ArrowLeft'){
+                navLightbox(-1);
+            } else if(e.key === 'ArrowRight'){
+                navLightbox(1);
             }
         }
     });
 
-   
+    // Close lightbox when clicking outside content
     if (lightbox) {
         lightbox.addEventListener('click', function (e) {
             if (e.target === lightbox) {
@@ -324,7 +316,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    
+    // Touch swipe support for lightbox on mobile
     var touchStartX = 0;
     var touchEndX = 0;
     var isSwiping = false;
@@ -341,23 +333,22 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }, { passive: true });
 
-        lightboxImage.addEventListener('touchend', function (e) {
-            if (!isSwiping) return;
+        lightboxImage.addEventListener('touchend', function(e){
+            if(!isSwiping) return;
             isSwiping = false;
-            var swipeDistance = touchStartX - touchEndX;
-            if (Math.abs(swipeDistance) > 50) {
-                if (swipeDistance > 0) {
-                    navigateLightbox(1); 
+            var dist = touchStartX - touchEndX;
+            if(Math.abs(dist) > 50){
+                if(dist > 0){
+                    navLightbox(1);
                 } else {
-                    navigateLightbox(-1); 
+                    navLightbox(-1);
                 }
             }
-            touchStartX = 0;
-            touchEndX = 0;
+            touchStartX = 0; touchEndX = 0;
         }, { passive: true });
     }
 
-    
+    // Keyboard navigation for dynamically generated cards (event delegation)
     document.getElementById('galleryGrid').addEventListener('keydown', function (e) {
         var card = e.target.closest('.art-card');
         if (card && (e.key === 'Enter' || e.key === ' ')) {
@@ -369,14 +360,15 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-
+    // -- email (spam protected lol)
+    // encoded as char codes shifted by 1 so scrapers cant grab it
     var _encodedEmail = [
         117, 115, 98, 100, 122, 115, 102, 111, 123, 103, 98, 118, 115, 98, 53, 65, 104, 110, 98, 106, 109, 47, 100, 112, 110
     ];
 
-    function _decodeEmail(arr) {
+    function _decodeEmail(arr){
         var s = '';
-        for (var i = 0; i < arr.length; i++) {
+        for(var i=0; i<arr.length; i++){
             s += String.fromCharCode(arr[i] - 1);
         }
         return s;
@@ -390,7 +382,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var emailRevealBtn = document.getElementById('email-reveal-btn');
 
     function safelyRevealEmail() {
-        
+        // Anti-bot: must have been on page for at least 3 seconds
         if (Date.now() - _pageLoadedAt < 3000) {
             if (emailRevealBtn) {
                 emailRevealBtn.textContent = '⏳ Please wait...';
@@ -401,7 +393,7 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
-        
+        // Anti-bot: check if a real mouse event occurred (bots simulate clicks via JS)
         if (_emailRevealed) return;
         _emailRevealed = true;
 
@@ -410,7 +402,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         if (emailDisplay) {
-            
+            // Build mailto link with anti-spam attributes
             var link = document.createElement('a');
             link.href = 'mailto:' + _realEmail;
             link.textContent = _realEmail;
@@ -420,13 +412,13 @@ document.addEventListener('DOMContentLoaded', function () {
             emailDisplay.appendChild(link);
         }
 
-        
+        // Hide the reveal button
         if (emailRevealBtn) {
             emailRevealBtn.style.display = 'none';
         }
     }
 
-    
+    // Reveal on button click
     if (emailRevealBtn) {
         emailRevealBtn.addEventListener('click', function (e) {
             e.preventDefault();
@@ -434,7 +426,9 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-
+// Also reveal on hover (after a 1-second intentional hold) — only if a real mouse is used
+    // The timer is cleared on mouseleave, so the email only unmasks if the user
+    // intentionally hovers over the button for the full duration.
     var hoverTimer = null;
     if (emailRevealBtn) {
         emailRevealBtn.addEventListener('mouseenter', function () {
@@ -451,21 +445,21 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    
+    // -- active nav link on scroll
     var sections = document.querySelectorAll('section[id]');
 
-    function updateActiveNavLink() {
+    function updateActiveNavLink(){
         var scrollPos = window.pageYOffset + 150;
 
-        sections.forEach(function (section) {
+        sections.forEach(function(section){
             var sectionTop = section.offsetTop;
             var sectionBottom = sectionTop + section.offsetHeight;
             var sectionId = section.getAttribute('id');
 
-            if (scrollPos >= sectionTop && scrollPos < sectionBottom) {
-                navLinkItems.forEach(function (link) {
+            if(scrollPos >= sectionTop && scrollPos < sectionBottom){
+                navLinkItems.forEach(function(link){
                     link.classList.remove('active');
-                    if (link.getAttribute('href') === '#' + sectionId) {
+                    if(link.getAttribute('href') === '#' + sectionId){
                         link.classList.add('active');
                     }
                 });
@@ -475,8 +469,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     window.addEventListener('scroll', updateActiveNavLink, { passive: true });
 
-   
-    if ('IntersectionObserver' in window) {
+    // -- scroll animations (IntersectionObserver)
+    if('IntersectionObserver' in window){
         var animateElements = document.querySelectorAll(
             '.gallery-grid .art-card, ' +
             '.about-content, ' +
@@ -484,9 +478,9 @@ document.addEventListener('DOMContentLoaded', function () {
             '.section-header'
         );
 
-        var observer = new IntersectionObserver(function (entries) {
-            entries.forEach(function (entry) {
-                if (entry.isIntersecting) {
+        var observer = new IntersectionObserver(function(entries){
+            entries.forEach(function(entry){
+                if(entry.isIntersecting){
                     entry.target.style.opacity = '1';
                     entry.target.style.transform = 'translateY(0)';
                     observer.unobserve(entry.target);
@@ -497,33 +491,34 @@ document.addEventListener('DOMContentLoaded', function () {
             rootMargin: '0px 0px -50px 0px'
         });
 
-        animateElements.forEach(function (el) {
+        animateElements.forEach(function(el){
             el.style.opacity = '0';
             el.style.transform = 'translateY(30px)';
             el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
             observer.observe(el);
         });
     } else {
-        
+        // fallback for old browsers
         var els = document.querySelectorAll(
             '.gallery-grid .art-card, ' +
             '.about-content, ' +
             '.contact-content, ' +
             '.section-header'
         );
-        els.forEach(function (el) {
+        els.forEach(function(el){
             el.style.opacity = '1';
             el.style.transform = 'translateY(0)';
         });
     }
 
-    document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
-        anchor.addEventListener('click', function (e) {
+    // -- smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(function(anchor){
+        anchor.addEventListener('click', function(e){
             var targetId = this.getAttribute('href');
-            if (targetId === '#') return;
+            if(targetId === '#') return;
 
             var targetElement = document.querySelector(targetId);
-            if (targetElement) {
+            if(targetElement){
                 e.preventDefault();
                 var headerOffset = 80;
                 var elementPosition = targetElement.getBoundingClientRect().top;
@@ -537,15 +532,15 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    
-    filterButtons.forEach(function (btn) {
+    // -- keyboard nav for filter buttons
+    filterButtons.forEach(function(btn){
         btn.setAttribute('tabindex', '0');
-        btn.addEventListener('keydown', function (e) {
-            if (e.key === 'Enter' || e.key === ' ') {
+        btn.addEventListener('keydown', function(e){
+            if(e.key === 'Enter' || e.key === ' '){
                 e.preventDefault();
                 this.click();
             }
         });
     });
 
-}); 
+});

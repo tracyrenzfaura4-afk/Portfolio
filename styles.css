@@ -1,4 +1,5 @@
-
+/* Remy/Pepper Steak portfolio styles */
+/* some colors might need tweaking later */
 *,
 *::before,
 *::after {
@@ -8,6 +9,7 @@
 }
 
 :root {
+    /* Pink & Beige Color Palette */
     --pink-100: #fff0f3;
     --pink-200: #ffc8dd;
     --pink-300: #ffb3c6;
@@ -34,15 +36,15 @@
     --border-color: #f0d9c8;
     --shadow-color: rgba(255, 107, 157, 0.15);
 
-  
+    /* Typography */
     --font-display: 'Playfair Display', serif;
     --font-body: 'Inter', sans-serif;
 
-  
+    /* Spacing */
     --section-padding: 100px 0;
     --container-width: 1200px;
 
-  
+    /* Transitions */
     --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-slow: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-bounce: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
@@ -64,7 +66,7 @@ body {
     animation: pinkCycle 10s ease-in-out infinite;
 }
 
-
+/* ----- Floating Hearts Background ----- */
 body::before {
     content: '♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥';
     position: fixed;
@@ -123,7 +125,7 @@ ul {
     animation: sparkle 2s ease-in-out infinite;
 }
 
-
+/* ----- Section Headers ----- */
 .section-header {
     text-align: center;
     margin-bottom: 60px;
@@ -177,7 +179,7 @@ ul {
 .divider::before { left: -14px; }
 .divider::after { right: -14px; }
 
-
+/* ----- Sparkle decoration elements ----- */
 .sparkle-deco {
     position: relative;
 }
@@ -190,7 +192,18 @@ ul {
     animation: sparkle 2s ease-in-out infinite;
 }
 
+/* duplicate? keeping just in case */
+.sparkle-deco {
+    position: relative;
+}
+.old-card-style {
+    /* was using this before the redesign, might cleanup later */
+    border-radius: 12px;
+    background: #fff;
+    padding: 16px;
+}
 
+/* ----- Buttons ----- */
 .btn {
     display: inline-block;
     padding: 14px 32px;
@@ -245,7 +258,7 @@ ul {
     transform: translateY(-3px);
 }
 
-
+/* ----- Navigation ----- */
 .navbar {
     position: fixed;
     top: 0;
@@ -366,7 +379,7 @@ ul {
     transition: var(--transition);
 }
 
-
+/* ----- Hero Section ----- */
 .hero {
     min-height: 100vh;
     display: flex;
@@ -380,7 +393,7 @@ ul {
     overflow: hidden;
 }
 
-
+/* Floating decorative circles */
 .hero::before,
 .hero::after {
     content: '';
@@ -477,7 +490,7 @@ ul {
     animation: pulse-glow 3s ease-in-out infinite;
 }
 
-
+/* Heart frame decor */
 .hero-art-frame::before {
     content: '';
     position: absolute;
@@ -575,7 +588,7 @@ ul {
     animation: bounce 2s infinite;
 }
 
-
+/* ----- Gallery Section ----- */
 .gallery {
     padding: var(--section-padding);
     background: var(--bg-section);
@@ -744,7 +757,7 @@ ul {
     font-weight: 500;
 }
 
-
+/* ----- About Section ----- */
 .about {
     padding: var(--section-padding);
     position: relative;
@@ -908,6 +921,7 @@ ul {
     margin-top: 4px;
 }
 
+/* ----- Contact Section ----- */
 .contact {
     padding: var(--section-padding);
     background: var(--bg-section);
@@ -1045,7 +1059,7 @@ ul {
     font-size: 0.9rem;
 }
 
-
+/* ----- Email Reveal Button (spam protection) ----- */
 .email-reveal-btn {
     background: linear-gradient(135deg, var(--pink-500), var(--pink-300));
     color: #fff;
@@ -1110,7 +1124,7 @@ ul {
     box-shadow: 0 4px 12px rgba(255, 107, 157, 0.1);
 }
 
-
+/* ----- Footer ----- */
 .footer {
     padding: 40px 0;
     border-top: 2px solid var(--border-color);
@@ -1141,7 +1155,7 @@ ul {
     margin-bottom: 4px;
 }
 
-
+/* ----- Lightbox ----- */
 .lightbox {
     display: none;
     position: fixed;
@@ -1311,7 +1325,7 @@ ul {
     color: var(--text-secondary);
 }
 
-
+/* ----- Animations ----- */
 @keyframes fadeInUp {
     from {
         opacity: 0;
@@ -1411,43 +1425,43 @@ ul {
     75% { transform: rotate(3deg); }
 }
 
-
+/* ----- Pink Color Cycling Animation (10s per color) ----- */
 @keyframes pinkCycle {
     0%, 100% {
-        background-color: #fff5ee;     
+        background-color: #fff5ee;     /* base beige */
         border-color: #f0d9c8;
     }
     12.5% {
-        background-color: #fff0f3;    
+        background-color: #fff0f3;     /* pink-100 */
         border-color: #ffc8dd;
     }
     25% {
-        background-color: #ffe0e8;     
+        background-color: #ffe0e8;     /* light pink */
         border-color: #ffb3c6;
     }
     37.5% {
-        background-color: #ffd0dd;     
+        background-color: #ffd0dd;     /* medium pink */
         border-color: #ff8fab;
     }
     50% {
-        background-color: #ffc0d0;    
+        background-color: #ffc0d0;     /* deeper pink */
         border-color: #ff6b9d;
     }
     62.5% {
-        background-color: #ffd0dd;     
+        background-color: #ffd0dd;     /* medium pink */
         border-color: #ff8fab;
     }
     75% {
-        background-color: #ffe0e8;     
+        background-color: #ffe0e8;     /* light pink */
         border-color: #ffb3c6;
     }
     87.5% {
-        background-color: #fff0f3;     
+        background-color: #fff0f3;     /* pink-100 */
         border-color: #ffc8dd;
     }
 }
 
-
+/* ----- Responsive Design ----- */
 @media (max-width: 1024px) {
     .hero-title {
         font-size: 3.5rem;
@@ -1645,7 +1659,12 @@ ul {
     }
 }
 
+/* ============================================
+   MOBILE-OPTIMIZED OVERRIDES
+   Full mobile experience matching desktop quality
+   ============================================ */
 
+/* --- Extra small devices (phones, < 400px) --- */
 @media (max-width: 399px) {
     .hero-title {
         font-size: 1.8rem;
@@ -1727,7 +1746,7 @@ ul {
     }
 }
 
-
+/* --- Mobile 480px refined --- */
 @media (max-width: 480px) {
     .nav-logo {
         font-size: 1.3rem;
@@ -1809,7 +1828,7 @@ ul {
     }
 }
 
-
+/* --- Mobile 768px refined --- */
 @media (max-width: 768px) {
     .nav-logo {
         font-size: 1.4rem;
@@ -1895,7 +1914,7 @@ ul {
     }
 }
 
-
+/* --- Landscape mobile optimization --- */
 @media (max-height: 500px) and (orientation: landscape) {
     .hero {
         min-height: auto;
@@ -1983,7 +2002,7 @@ ul {
     }
 }
 
-
+/* --- Tablet landscape and small desktop --- */
 @media (min-width: 769px) and (max-width: 1024px) {
     .hero-title {
         font-size: 3.2rem;
