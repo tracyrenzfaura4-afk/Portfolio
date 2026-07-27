@@ -386,10 +386,25 @@ ul {
     align-items: center;
     position: relative;
     padding: 120px 24px 60px;
+    /*
+     * Layered background technique — human-crafted for subtle depth.
+     * Background-1.jpg sits at the lowest layer with ~12–18% visibility,
+     * veiled by warm tonal gradients above so the image breathes softly
+     * behind the text without competing with it. Pink radial glows sit
+     * on top to preserve the original vibe.
+     */
     background: 
+        /* 1 — Pink glow accents (decorative) */
         radial-gradient(ellipse at 20% 50%, rgba(255, 107, 157, 0.08) 0%, transparent 50%),
         radial-gradient(ellipse at 80% 50%, rgba(255, 179, 198, 0.12) 0%, transparent 50%),
-        linear-gradient(180deg, #fff5ee 0%, #fff0f3 50%, #fffbf5 100%);
+        /* 2 — Warm wash overlay (lets ~12–18% of the image show through) */
+        linear-gradient(180deg, 
+            rgba(255, 245, 238, 0.88) 0%, 
+            rgba(255, 240, 243, 0.82) 50%, 
+            rgba(255, 251, 245, 0.88) 100%
+        ),
+        /* 3 — Background image with subtle texture */
+        url('images/Background-1.jpg') center / cover no-repeat fixed;
     overflow: hidden;
 }
 

@@ -64,7 +64,10 @@ document.addEventListener('DOMContentLoaded', function(){
             description: 'A curated collection of vibrant digital illustrations exploring color theory, advanced blending techniques, and unique color palettes.',
             images: [
                 { src: 'images/digital-art-1.jpg', title: 'Digital Illustration 1' },
-                { src: 'images/digital-art-2.jpg', title: 'Digital Illustration 2' }
+                { src: 'images/digital-art-2.jpg', title: 'Digital Illustration 2' },
+                { src: 'images/digital-art-3.jpg', title: 'Digital Illustration 3' },
+                { src: 'images/digital-art-4.jpg', title: 'Digital Illustration 4' },
+                { src: 'images/digital-art-5.jpg', title: 'Digital Illustration 5' }
             ]
         },
         {
